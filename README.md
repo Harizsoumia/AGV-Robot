@@ -19,11 +19,11 @@ graph TD
         G[Mechanical Servo Gate] <--|Pin 18: Angle Commands 0°/90°| B
     end
 
-    subgraph Local LAN Hub (ALHAN Network)
+    subgraph Local LAN Hub
         B <-->|ws://192.168.1.70:8080| C[Central Node.js Engine]
     end
 
-    subgraph Logic Core (VS Code Engine)
+    subgraph Logic Core
         C --> D{Junction Analytics}
         D -->|No Split Detected| E[Action: FOLLOW_LINE]
         D -->|Mismatched Junction 1,1| F[Action: ROUTE_BIN_A]
@@ -65,50 +65,57 @@ sequenceDiagram
 
 ## 🛠️ Core Technology Stack
 
-Runtime Environment: Node.js (V8 Engine optimized for asynchronous operations)
+- **Runtime Environment:** Node.js (V8 Engine optimized for asynchronous operations)
+- **Application Framework:** Express.js (Management Dashboard routing infrastructure)
+- **Communication Protocol:** Native `ws` engine (RFC 6455 persistent duplex WebSocket server)
+- **Edge Hardware Simulation Target:** ESP32-S3 Microcontroller running standard Xtensa-compiled C++ network stacks
 
-Application Framework: Express.js (Management Dashboard routing infrastructure)
-
-Communication Protocol: Native ws Engine (RFC 6455 persistent duplex WebSocket server)
-
-Edge Hardware Simulation Target: ESP32-S3 Microcontroller running standard Xtensa-complied C++ network stacks
-
-⚙️ Repository File Structure
-
-sahlasort-backend/
-├── server.js # Central Engine: orchestrates WebSocket connections & sorting rules
-├── package.json # Project manifests, script maps, and absolute dependencies
-└── README.md # System operational blueprint and technical architecture guide
-
-🚀 Deployment & Local Reproducibility
-
-1. Prerequisites
-   Ensure you have Node.js (v18+) installed on your machine.
-
-2. Installation
-   Clone this repository and install the dependencies:
-
-git clone [https://github.com/YOUR_GITHUB_USERNAME/sahlasort-backend.git](https://github.com/YOUR_GITHUB_USERNAME/sahlasort-backend.git)
-cd sahlasort-backend
-npm install
-
-3. Execution
-   Launch the central logic core engine:
-   node server.js
-
-The terminal will spin up and display the active structural checkpoints:
-📡 WebSocket Server running on ws://localhost:8080
-🏭 Management Dashboard API available on http://localhost:3000
-
-4. Edge Node Pairing (Hardware Setup)
-   Configure your edge microcontroller nodes to pair with your running host instance. Locate your localized machine IPv4 loop (ipconfig/ifconfig) and bind the connection credentials inside your firmware architecture:
-   const char* ssid = "CirkitWifi";
-   const char* ws_host = "192.168.1.70"; // Target LAN IP Core
-   const int ws_port = 8080;
-   const char* ssid = "CirkitWifi";
-   const char* ws_host = "192.168.1.70"; // Target LAN IP Core
-   const int ws_port = 8080;
+## ⚙️ Repository File Structure
 
 ```
+sahlasort-backend/
+├── server.js            # Central Engine: orchestrates WebSocket connections & sorting rules
+├── package.json         # Project manifests, script maps, and dependencies
+└── README.md            # System operational blueprint and technical architecture guide
+```
 
+## 🚀 Deployment & Local Reproducibility
+
+### 1. Prerequisites
+
+Ensure you have Node.js (v18+) installed on your machine.
+
+### 2. Installation
+
+Clone this repository and install the dependencies:
+
+```bash
+git clone https://github.com/YOUR_GITHUB_USERNAME/sahlasort-backend.git
+cd sahlasort-backend
+npm install
+```
+
+### 3. Execution
+
+Launch the central logic core engine:
+
+```bash
+node server.js
+```
+
+The terminal will spin up and display the active structural checkpoints:
+
+```
+📡 WebSocket Server running on ws://localhost:8080
+🏭 Management Dashboard API available on http://localhost:3000
+```
+
+### 4. Edge Node Pairing (Hardware Setup)
+
+Configure your edge microcontroller nodes to pair with your running host instance. Locate your local machine's IPv4 address (`ipconfig` / `ifconfig`) and bind the connection credentials inside your firmware:
+
+```cpp
+const char* ssid = "CirkitWifi";
+const char* ws_host = "192.168.1.70"; // Target LAN IP Core
+const int ws_port = 8080;
 ```
