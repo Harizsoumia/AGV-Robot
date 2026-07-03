@@ -14,16 +14,16 @@ Traditional IoT systems rely on standard HTTP polling mechanisms, which introduc
 
 ```mermaid
 graph TD
-    subgraph Warehouse Floor (Edge Simulation)
+    subgraph "Warehouse Floor (Edge Simulation)"
         A[ESP32-S3 Core] -->|Pin 4/5: Continuous IR Telemetry JSON| B(WebSocket Connection)
         G[Mechanical Servo Gate] <--|Pin 18: Angle Commands 0°/90°| B
     end
 
-    subgraph Local LAN Hub
+    subgraph "Local LAN Hub"
         B <-->|ws://192.168.1.70:8080| C[Central Node.js Engine]
     end
 
-    subgraph Logic Core
+    subgraph "Logic Core"
         C --> D{Junction Analytics}
         D -->|No Split Detected| E[Action: FOLLOW_LINE]
         D -->|Mismatched Junction 1,1| F[Action: ROUTE_BIN_A]
